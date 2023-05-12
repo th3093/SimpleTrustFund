@@ -1,0 +1,130 @@
+{
+	"compiler": {
+		"version": "0.8.6+commit.11564f7e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_kid",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_timeToMaturity",
+						"type": "uint256"
+					}
+				],
+				"name": "addKid",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "admin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_kid",
+						"type": "address"
+					}
+				],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "remainingTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "The name of the author",
+			"details": "Explain to a developer any extra details",
+			"kind": "dev",
+			"methods": {
+				"addKid(address,uint256)": {
+					"details": "Number 31556952 is factor for years to seconds",
+					"params": {
+						"_kid": "parameter just like in doxygen (must be followed by parameter name)"
+					}
+				}
+			},
+			"title": "A title that should describe the contract/interface",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"addKid(address,uint256)": {
+					"notice": "Explain to an end user what this does"
+				}
+			},
+			"notice": "Explain to an end user what this does",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/TrustFund.sol": "TrustFund"
+		},
+		"evmVersion": "berlin",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/TrustFund.sol": {
+			"keccak256": "0xcc670020f9d0fb1b799f2924c6e1ad65cf6cc379ce1cec938467aa1742741920",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://0e9bb3ac1c8287ed007745df9d0e6e16ea996f3ec8f1a8e3d213b4d3ee364550",
+				"dweb:/ipfs/QmNwEBErHQMxKPjyooiDeNPNjPWgJPUt4JNpjpmnR4CKi5"
+			]
+		}
+	},
+	"version": 1
+}
