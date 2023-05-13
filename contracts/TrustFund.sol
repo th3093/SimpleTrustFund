@@ -7,7 +7,7 @@ contract TrustFund{
     struct Beneficiary{
         uint value;
         uint payOutDate;
-        uint32 paid;
+        bool paid;
         address[] spenders;
     }
 
