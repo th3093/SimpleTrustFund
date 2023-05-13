@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity <0.9.0;
 
-
 contract TrustFund{
 
     struct Beneficiary{
@@ -10,7 +9,6 @@ contract TrustFund{
         bool paid;
         address[] spenders;
     }
-
 
     mapping(address => bytes32) beneficiaryIDs;
     mapping(bytes32 => Beneficiary) beneficiaries;
@@ -68,7 +66,6 @@ contract TrustFund{
         uint initialStamp
     );
 
-
     // beneficiaries[_ben] = Beneficiary(msg.value, _timeToPayOut * 31556952 + block.timestamp, false);
     function addBeneficiary(address _ben, uint _timeToPayOut) external payable isValidValue() isNotBen(_ben) {
         beneficiaryIDs[_ben] = keccak256(abi.encodePacked(_ben));
@@ -112,5 +109,4 @@ contract TrustFund{
             beneficiaries[beneficiaryIDs[_ben]].spenders
             );
     }
-
 }
