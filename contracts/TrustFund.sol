@@ -5,20 +5,19 @@ pragma solidity <0.9.0;
 contract TrustFund{
 
     struct Beneficiary{
+        address spender;
         uint value;
         uint payOutDate;
         bool paid;
     }
 
+//TODO: mapping für mehr als nur den contract deployer -> jeder kann nutzen!!
+    mapping(address => mapping(address => bool)) spenders;
     mapping(address =>  Beneficiary) public beneficiaries;
-    address public admin;
 
-    constructor (){
-        admin = msg.sender;
-    }
 
-    modifier isAdmin() {
-        require(admin == msg.sender, "Action not allowed. Permission: Only Admin");
+    modifier isSpender(address _ben){
+        require(spenders[msg.sender][_ben], "Origin of call not spender address");
         _;
     }
 
@@ -28,7 +27,7 @@ contract TrustFund{
     }
 
     modifier isNotBen(address _ben){
-        require(beneficiaries[_ben].value == 0, "Beneficiary already created");
+        require(beneficiaries[_ben].value == 0, "Beneficiary already created. Check etherscan for more information.");
         _;
     }
 
@@ -40,6 +39,7 @@ contract TrustFund{
     }
 
     event BeneficiaryCreated(
+        address indexed _spender,
         address indexed _ben,
         uint _payOutDate,
         uint _value
@@ -63,12 +63,13 @@ contract TrustFund{
     );
 
     // beneficiaries[_ben] = Beneficiary(msg.value, _timeToPayOut * 31556952 + block.timestamp, false);
-    function addBeneficiary(address _ben, uint _timeToPayOut) external payable isAdmin() isNotBen(_ben) {
-        beneficiaries[_ben] = Beneficiary(msg.value, _timeToPayOut * 20 + block.timestamp, false);
-        emit BeneficiaryCreated(_ben, _timeToPayOut, msg.value);
+    function addBeneficiary(address _ben, uint _timeToPayOut) external payable isNotBen(_ben) {
+        beneficiaries[_ben] = Beneficiary(msg.sender, msg.value, _timeToPayOut * 20 + block.timestamp, false);
+        spenders[msg.sender][_ben] = true;
+        emit BeneficiaryCreated(msg.sender, _ben, _timeToPayOut, msg.value);
     }
 
-    function deposit(address _ben) external payable isAdmin() isBen(_ben) {
+    function deposit(address _ben) external payable isSpender(_ben) isBen(_ben) {
         beneficiaries[_ben].value += msg.value;
         emit Deposit(_ben, msg.value);
     }
@@ -79,6 +80,7 @@ contract TrustFund{
         payable(msg.sender).transfer(ben.value);
         emit Withdraw(msg.sender, ben.value);
         delete beneficiaries[msg.sender];
+        delete spenders[ben.spender][msg.sender];
     }
   
     function remainingTime() external view returns(uint){
